@@ -6,9 +6,13 @@ import ProductCard from './ProductCard'
 
 export default function ProductShowCase() {
 
-  const { products, loading, error, filteredProducts, searchQuery } = useProductStore()
 
-  const prod = searchQuery ? filteredProducts : products;
+  const { products, loading, error, filteredProducts, searchQuery, selectedCategory } = useProductStore()
+  console.log("searchQuery", searchQuery)
+  console.log("selectedCategory", selectedCategory)
+  console.log("filteredProducts", filteredProducts)
+
+  const prod = (searchQuery || selectedCategory) ? filteredProducts : products;
 
   return (
     <>
