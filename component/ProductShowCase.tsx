@@ -6,9 +6,11 @@ import ProductCard from './ProductCard'
 
 export default function ProductShowCase() {
 
-  const { products, loading, error, } = useProductStore()
+  const { products, loading, error, filteredProducts, searchQuery } = useProductStore()
 
-  console.log("products:", products);
+  // console.log("filteredProducts:", filteredProducts);
+
+  const prod = searchQuery ? filteredProducts : products;
 
   return (
     <>
@@ -19,7 +21,7 @@ export default function ProductShowCase() {
           <ErrorComp />)
           :
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  w-[90%] mx-auto my-10'>
-            {products.map((product: Product, index: number) => (
+            {prod.map((product: Product, index: number) => (
               <ProductCard key={index} product={product} />
             ))}
 

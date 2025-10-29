@@ -9,6 +9,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 
 
@@ -18,9 +19,7 @@ export default function Page() {
   const router = useRouter();
   const id = params.get("id")
 
-  const { products, loading, error, } = useProductStore()
-
-  console.log("errro", error)
+  const { products, loading, error, addToCart, cart, } = useProductStore()
 
   const [item, setItem] = useState<Product>({} as Product)
   const [orderCount, setOrderCount] = useState<number>(1);
@@ -48,7 +47,17 @@ export default function Page() {
     }
 
     getProd()
-  })
+  }, [id, products])
+
+  const handleAddToCart = () => {
+    const alreadyInCart = cart.find((c) => c.id === item.id)
+    if (alreadyInCart) {
+      toast.warning("This product is already in your cart 🛒")
+    } else {
+      addToCart({ ...item, quantity: orderCount })
+      toast.success(`${item.title} added to cart! 🎉`)
+    }
+  }
 
 
   return (
@@ -81,19 +90,20 @@ export default function Page() {
                 <div>
                   <div className='flex items-center gap-4  py-2'>
                     <h3 className='text-zinc-700 font-bold'>{item?.title}</h3>
-                    <h4 className='text-zinc-500 bg-zinc-300 rounded-full py-1 px-2'>{item?.category}</h4>
+                    <h4 className='text-zinc-500 bg-zinc-300 rounded-full py-1.5 px-4 text-xs'>{item?.category}</h4>
                   </div>
                   <p className='text-zinc-500 my-4 border-y border-y-zinc-200 py-2'>{item?.description}</p>
 
                   <div className='flex items-center gap-10'>
 
                     <div className='flex items-center gap-2 '>
-                      <HugeiconsIcon icon={MinusSignIcon} className="text-red-500" size={12} onClick={handleDecOrderCount} />
+                      <HugeiconsIcon icon={MinusSignIcon} className="text-red-500 cursor-pointer" size={12} onClick={handleDecOrderCount} />
                       <input value={orderCount} className='w-12 border border-zinc-100 text-center text-zinc-500 rounded-md p-1 text-sm focus:border-none' />
-                      <HugeiconsIcon icon={PlusSignIcon} className="text-green-500" size={12} onClick={handleIncOrderCount} />
+                      <HugeiconsIcon icon={PlusSignIcon} className="text-green-500 cursor-pointer" size={12} onClick={handleIncOrderCount} />
                     </div>
 
-                    <button className='rounded-md bg-green-500 flex items-center gap-2 px-4 py-2'>
+                    <button className='rounded-md bg-green-500 flex items-center gap-2 px-4 py-2 cursor-pointer'
+                      onClick={handleAddToCart}>
                       <HugeiconsIcon icon={ShoppingCartAdd02Icon} className=" text-green-100 " size={12} />
                       <span className='text-[12px]  '>Add To Cart</span>
                     </button>
