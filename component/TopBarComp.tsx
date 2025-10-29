@@ -98,7 +98,7 @@ export default function TopBarComp() {
         className=''
       />
 
-      <div className='mx-2 flex flex-col lg:flex-row items-center w-full lg:w-1/3'>
+      <div className='mx-2 flex flex-col lg:flex-row items-center w-full lg:w-2/3'>
         <div className='w-full flex'>
           <div className='relative bg-zinc-100 rounded-l-full flex flex-nowrap gap-4 items-center w-full'>
             <HugeiconsIcon
