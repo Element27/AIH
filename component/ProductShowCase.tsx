@@ -8,8 +8,6 @@ export default function ProductShowCase() {
 
   const { products, loading, error, filteredProducts, searchQuery } = useProductStore()
 
-  // console.log("filteredProducts:", filteredProducts);
-
   const prod = searchQuery ? filteredProducts : products;
 
   return (

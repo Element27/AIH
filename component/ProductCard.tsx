@@ -13,10 +13,10 @@ export default function ProductCard({ product }: { product: Product }) {
   const handleAddToCart = () => {
     const alreadyInCart = cart.find((c) => c.id === product.id)
     if (alreadyInCart) {
-      toast.warning("This product is already in your cart 🛒")
+      toast.warning("This product is already in your cart")
     } else {
       addToCart({ ...product, quantity: 1 })
-      toast.success(`${product.title} added to cart! 🎉`)
+      toast.success(`${product.title} added to cart!`)
     }
   }
 
