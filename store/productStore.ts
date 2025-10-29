@@ -23,7 +23,7 @@ interface ProductStore {
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
   filteredProducts: [],
-  loading: false,
+  loading: true,
   error: null,
   searchQuery: "",
 
