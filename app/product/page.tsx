@@ -76,8 +76,8 @@ export default function Page() {
           <ErrorComp />) :
 
           (
-            <div className='w-full'>
-              <div className='p-4 flex items-center justify-between gap-24'>
+            <div className='w-full lg:w-[90%] mx-auto flex flex-col lg:flex-row gap-12 my-8'>
+              <div className='p-4 flex items-center justify-between gap-24 flex-col lg:flex-row'>
                 <Image
                   width={240}
                   height={360}
