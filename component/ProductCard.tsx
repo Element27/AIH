@@ -50,7 +50,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Content Container */}
         <div className='flex-1 p-3 flex flex-col justify-between'>
           <div>
-            <h4 className='text-sm font-semibold text-gray-900 mb-1.5 line-clamp-2 group-hover:text-blue-600 transition-colors leading-tight'>
+            <h4 className='text-sm font-semibold text-gray-900 mb-1.5 line-clamp-2 group-hover:text-green-500 transition-colors leading-tight'>
               {product.title}
             </h4>
             <p className='text-xs text-gray-600 line-clamp-2 mb-2 leading-relaxed'>
@@ -69,7 +69,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 e.preventDefault();
                 handleAddToCart();
               }}
-              className='bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-colors shadow-sm hover:shadow-md active:scale-95 transform duration-150'
+              className='bg-green-500 bg-green-500 text-white p-2 rounded-lg transition-colors shadow-sm hover:shadow-md active:scale-95 transform duration-150'
               aria-label="Add to cart"
             >
               <HugeiconsIcon icon={ShoppingCartAdd02Icon} className="w-4 h-4" />

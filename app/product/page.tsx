@@ -8,7 +8,7 @@ import { ArrowLeft02Icon, MinusSignIcon, PlusSignIcon, ShoppingCartAdd02Icon, St
 import { HugeiconsIcon } from '@hugeicons/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 export default function Page() {
@@ -93,23 +93,21 @@ export default function Page() {
 
   if (!item) {
     return (
-      <Suspense fallback={<LoadingComp />}>
-        <div className="flex flex-col min-h-screen w-full font-sans bg-gray-50">
-          <TopBarComp />
-          <div className='flex-1 flex items-center justify-center p-4'>
-            <div className='bg-white rounded-xl shadow-sm p-12 max-w-md w-full text-center border border-gray-100'>
-              <h2 className='text-gray-900 font-bold text-2xl mb-2'>Product not found</h2>
-              <p className='text-gray-600 text-sm mb-6'>{`The product you're looking for doesn't exist`}</p>
-              <button
-                onClick={() => router.push('/')}
-                className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors'
-              >
-                Back to Home
-              </button>
-            </div>
+      <div className="flex flex-col min-h-screen w-full font-sans bg-gray-50">
+        <TopBarComp />
+        <div className='flex-1 flex items-center justify-center p-4'>
+          <div className='bg-white rounded-xl shadow-sm p-12 max-w-md w-full text-center border border-gray-100'>
+            <h2 className='text-gray-900 font-bold text-2xl mb-2'>Product not found</h2>
+            <p className='text-gray-600 text-sm mb-6'>{`The product you're looking for doesn't exist`}</p>
+            <button
+              onClick={() => router.push('/')}
+              className='bg-green-500 bg-green-500 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors'
+            >
+              Back to Home
+            </button>
           </div>
         </div>
-      </Suspense>
+      </div>
     )
   }
 
@@ -117,11 +115,9 @@ export default function Page() {
 
   return (
     <div className="flex flex-col min-h-screen w-full font-sans bg-gray-50">
-      <Suspense fallback={<LoadingComp />}>
-        <TopBarComp />
-      </Suspense>
 
-      {/* Back Button */}
+      <TopBarComp />
+
       <div className="p-4 md:p-6 lg:px-12">
         <button
           onClick={() => router.back()}
@@ -153,7 +149,7 @@ export default function Page() {
             {/* Product Info */}
             <div className='flex flex-col justify-center'>
               {/* Category Badge */}
-              <span className='inline-block w-fit bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium mb-3'>
+              <span className='inline-block w-fit bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-medium mb-3'>
                 {item.category}
               </span>
 
@@ -219,7 +215,7 @@ export default function Page() {
 
                 {/* Add to Cart Button */}
                 <button
-                  className='flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-6 py-3 font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm hover:shadow-md'
+                  className='flex-1 bg-green-500 text-white rounded-lg px-6 py-3 font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm hover:shadow-md'
                   onClick={handleAddToCart}
                 >
                   <HugeiconsIcon icon={ShoppingCartAdd02Icon} className="w-5 h-5" />
@@ -228,7 +224,7 @@ export default function Page() {
               </div>
 
               {isInCart && (
-                <p className='text-sm text-green-600 mt-3 flex items-center gap-1'>
+                <p className='text-sm text-green-500 mt-3 flex items-center gap-1'>
                   ✓ This item is in your cart
                 </p>
               )}

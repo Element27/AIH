@@ -107,7 +107,7 @@ export default function TopBarComp() {
         {/* Cart icon - visible on mobile, hidden on desktop */}
         <div className='relative flex items-center lg:hidden'>
           <Link href="/cart" className='relative hover:scale-110 transition-transform p-1'>
-            <HugeiconsIcon icon={ShoppingCart02Icon} className='text-blue-600 w-6 h-6' />
+            <HugeiconsIcon icon={ShoppingCart02Icon} className='text-green-500 w-6 h-6' />
             {cart.length > 0 && (
               <div className='text-white bg-red-500 rounded-full absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center shadow-md'>
                 <span className='text-[10px] font-bold'>{cart.length}</span>
@@ -142,7 +142,7 @@ export default function TopBarComp() {
             )}
           </div>
           <button
-            className='bg-blue-600 py-1.5 px-3 sm:px-4 text-white rounded-r-lg cursor-pointer hover:bg-blue-700 transition-colors shadow-sm flex-shrink-0'
+            className='bg-green-500 py-1.5 px-3 sm:px-4 text-white rounded-r-lg cursor-pointer transition-colors shadow-sm '
             onClick={handleSearch}
           >
             <span className='hidden sm:block text-sm font-medium'>
@@ -185,7 +185,7 @@ export default function TopBarComp() {
       {/* Cart icon - hidden on mobile, visible on desktop */}
       <div className='relative hidden lg:flex items-center justify-center flex-shrink-0'>
         <Link href="/cart" className='relative hover:scale-110 transition-transform p-1'>
-          <HugeiconsIcon icon={ShoppingCart02Icon} className='text-blue-600 w-6 h-6' />
+          <HugeiconsIcon icon={ShoppingCart02Icon} className='text-green-500 w-6 h-6' />
           {cart.length > 0 && (
             <div className='text-white bg-red-500 rounded-full absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center shadow-md'>
               <span className='text-[10px] font-bold'>{cart.length}</span>

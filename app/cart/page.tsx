@@ -40,13 +40,13 @@ export default function Page() {
           <div className='flex-1 flex items-center justify-center p-4'>
             <div className='bg-white rounded-xl shadow-sm p-12 max-w-md w-full text-center border border-gray-100'>
               <div className='bg-blue-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4'>
-                <HugeiconsIcon icon={ShoppingCart01Icon} className="text-blue-500" size={40} />
+                <HugeiconsIcon icon={ShoppingCart01Icon} className="text-green-500" size={40} />
               </div>
               <h2 className='text-gray-900 font-bold text-2xl mb-2'>Your cart is empty</h2>
               <p className='text-gray-600 text-sm mb-6'>Add some products to get started</p>
               <button
                 onClick={() => router.push('/')}
-                className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors'
+                className='bg-green-500  text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors'
               >
                 Continue Shopping
               </button>
@@ -176,7 +176,7 @@ export default function Page() {
 
                     <button
                       onClick={handleCheckout}
-                      className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold mb-3 transition-colors shadow-sm hover:shadow-md'
+                      className='w-full bg-green-500 bg-green-500 text-white py-3 rounded-lg font-semibold mb-3 transition-colors shadow-sm hover:shadow-md'
                     >
                       Proceed to Checkout
                     </button>

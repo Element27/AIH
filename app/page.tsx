@@ -9,10 +9,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen  font-sans bg-zinc-50">
-      <Suspense fallback={<LoadingComp />}>
-        <TopBarComp />
-        <ProductShowCase />
-      </Suspense>
+      <TopBarComp />
+      <ProductShowCase />
     </div>
   );
 }
