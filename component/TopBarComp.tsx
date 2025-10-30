@@ -17,25 +17,21 @@ export default function TopBarComp() {
   // Sync URL params to state on mount and when URL changes
   useEffect(() => {
 
-    const func = () => {
-
-
+    const setFilterState = () => {
       const search = searchParams.get("search") || "";
       const category = searchParams.get("category") || "";
 
       setSearchValue(search);
       setFilterValue(category);
-    }
-    func();
+    };
+
+    setFilterState();
   }, [searchParams]);
 
   // Fetch products on mount
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-
-  console.log("searchValue", searchValue);
-  console.log("filterValue", filterValue);
 
   // Apply filters whenever search or filter values change
   useEffect(() => {
@@ -72,8 +68,8 @@ export default function TopBarComp() {
 
   const handleClearSearch = () => {
     setSearchValue("");
-    setFilterValue("")
-    updateURL({ search: "", category: "" });
+    updateURL({ search: "" });
+    // Note: We're only clearing search, keeping the category filter active
   };
 
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -88,27 +84,51 @@ export default function TopBarComp() {
     }
   };
 
-  return (
-    <div className='flex items-center py-2 px-4 w-full h-fit justify-between shadow-md gap-2'>
-      <Image
-        width={50}
-        height={50}
-        src="/logo.png"
-        alt="logo Icon"
-        className=''
-      />
+  const handleClearAll = () => {
+    setSearchValue("");
+    setFilterValue("");
+    updateURL({ search: "", category: "" });
+  };
 
-      <div className='mx-2 flex flex-col lg:flex-row items-center w-full lg:w-2/3'>
-        <div className='w-full flex'>
-          <div className='relative bg-zinc-100 rounded-l-full flex flex-nowrap gap-4 items-center w-full'>
+  return (
+    <div className='flex flex-col lg:flex-row items-center py-2 px-3 md:px-4 w-full h-fit justify-between shadow-sm border-b border-gray-100 gap-2 lg:gap-3 bg-white'>
+      {/* Logo and Cart - Top row on mobile */}
+      <div className='flex items-center justify-between w-full lg:w-auto gap-3'>
+        <Link href="/">
+          <Image
+            width={36}
+            height={36}
+            src="/logo.png"
+            alt="logo Icon"
+            className='flex-shrink-0 md:w-10 md:h-10 cursor-pointer hover:opacity-80 transition-opacity'
+          />
+        </Link>
+
+        {/* Cart icon - visible on mobile, hidden on desktop */}
+        <div className='relative flex items-center lg:hidden'>
+          <Link href="/cart" className='relative hover:scale-110 transition-transform p-1'>
+            <HugeiconsIcon icon={ShoppingCart02Icon} className='text-blue-600 w-6 h-6' />
+            {cart.length > 0 && (
+              <div className='text-white bg-red-500 rounded-full absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center shadow-md'>
+                <span className='text-[10px] font-bold'>{cart.length}</span>
+              </div>
+            )}
+          </Link>
+        </div>
+      </div>
+
+      {/* Search and Filter - Second row on mobile, middle on desktop */}
+      <div className='flex flex-col sm:flex-row items-center w-full lg:flex-1 gap-2'>
+        <div className='w-full flex flex-1'>
+          <div className='relative bg-gray-50 rounded-l-lg flex items-center w-full border border-gray-200 focus-within:border-blue-400 focus-within:bg-white transition-all'>
             <HugeiconsIcon
               icon={Search01Icon}
-              className="absolute top-1/2 transform -translate-y-1/2 left-2 text-zinc-800 w-5"
+              className="absolute left-2.5 text-gray-500 w-4 h-4"
             />
             <input
               type="text"
-              placeholder="Search..."
-              className='w-full pl-8 pr-8 text-zinc-700 p-2 focus:outline-none placeholder:text-zinc-600'
+              placeholder="Search products..."
+              className='w-full pl-9 pr-9 text-gray-700 py-1.5 text-sm bg-transparent focus:outline-none placeholder:text-gray-400'
               onChange={(e) => setSearchValue(e.target.value)}
               value={searchValue}
               onKeyPress={handleKeyPress}
@@ -116,45 +136,59 @@ export default function TopBarComp() {
             {searchValue && (
               <HugeiconsIcon
                 icon={Cancel01Icon}
-                className="absolute top-1/2 transform -translate-y-1/2 right-2 text-red-500 w-5 cursor-pointer hover:text-red-700"
+                className="absolute right-2.5 text-gray-400 w-4 h-4 cursor-pointer hover:text-red-500 transition-colors"
                 onClick={handleClearSearch}
               />
             )}
           </div>
           <button
-            className='bg-green-700 py-2 px-4 text-zinc-200 rounded-r-full cursor-pointer hover:bg-green-800 transition-colors'
+            className='bg-blue-600 py-1.5 px-3 sm:px-4 text-white rounded-r-lg cursor-pointer hover:bg-blue-700 transition-colors shadow-sm flex-shrink-0'
             onClick={handleSearch}
           >
-            <span className='hidden lg:block'>
+            <span className='hidden sm:block text-sm font-medium'>
               Search
             </span>
             <HugeiconsIcon
               icon={Search01Icon}
-              className="block lg:hidden text-zinc-200 w-3"
+              className="block sm:hidden text-white w-4 h-4"
             />
           </button>
         </div>
 
-        <select
-          onChange={handleFilter}
-          value={filterValue}
-          className='ml-4 p-2 rounded-md border border-zinc-300 text-zinc-700 w-full mx-2 my-2 focus:outline-none focus:border-green-500'
-        >
-          <option value="">All Categories</option>
-          {categories && categories.map((c) => (
-            <option key={c} value={c}>
-              {c.charAt(0).toUpperCase() + c.slice(1)}
-            </option>
-          ))}
-        </select>
+        <div className='flex gap-2 w-full sm:w-auto'>
+          <select
+            onChange={handleFilter}
+            value={filterValue}
+            className='p-1.5 px-3 rounded-lg border border-gray-200 text-gray-700 text-sm flex-1 sm:flex-none sm:min-w-[160px] lg:w-48 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 bg-white transition-all'
+          >
+            <option value="">All Categories</option>
+            {categories && categories.map((c) => (
+              <option key={c} value={c}>
+                {c.charAt(0).toUpperCase() + c.slice(1)}
+              </option>
+            ))}
+          </select>
+
+          {/* Clear All button - only show when filters are active */}
+          {(searchValue || filterValue) && (
+            <button
+              onClick={handleClearAll}
+              className='px-3 py-1.5 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors whitespace-nowrap'
+              title="Clear all filters"
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className='relative flex items-center justify-center'>
-        <Link href="/cart" className='relative hover:opacity-80 transition-opacity'>
-          <HugeiconsIcon icon={ShoppingCart02Icon} className='text-green-600 w-6 h-6' />
+      {/* Cart icon - hidden on mobile, visible on desktop */}
+      <div className='relative hidden lg:flex items-center justify-center flex-shrink-0'>
+        <Link href="/cart" className='relative hover:scale-110 transition-transform p-1'>
+          <HugeiconsIcon icon={ShoppingCart02Icon} className='text-blue-600 w-6 h-6' />
           {cart.length > 0 && (
-            <div className='text-green-100 bg-green-800 rounded-full absolute -top-1 -right-1 p-2 w-4 h-4 flex items-center justify-center'>
-              <span className='text-[10px] font-semibold'>{cart.length}</span>
+            <div className='text-white bg-red-500 rounded-full absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center shadow-md'>
+              <span className='text-[10px] font-bold'>{cart.length}</span>
             </div>
           )}
         </Link>

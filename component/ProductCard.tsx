@@ -21,46 +21,62 @@ export default function ProductCard({ product }: { product: Product }) {
   }
 
   return (
-    <div className='w-full max-w-3xs h-80 rounded-lg overflow-hidden shadow-sm relative m-4 flex flex-col mx-auto'>
-      <Link href={`/product?id=${product.id}`} className='w-full h-full flex flex-col'>
-        <div className='h-2/3 w-[90%] mx-auto my-2 relative'>
+    <div className='group w-full max-w-xs rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 relative m-2 flex flex-col mx-auto bg-white border border-gray-100'>
+      <Link href={`/product?id=${product.id}`} className='w-full flex-1 flex flex-col'>
+        {/* Image Container */}
+        <div className='relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden'>
           <Image
             width={240}
             height={320}
             src={product.image}
             alt={product.title}
-            className='w-full h-full object-contain'
+            className='w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300'
           />
 
+          {/* Category Badge */}
+          <div className='absolute top-2 left-2'>
+            <span className='bg-white/90 backdrop-blur-sm text-gray-700 px-2 py-1 rounded-full text-[10px] font-medium shadow-sm'>
+              {product.category}
+            </span>
+          </div>
 
-          {/*  */}
-
-
+          {/* Rating Badge */}
+          <div className='absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-0.5 shadow-sm flex items-center gap-0.5'>
+            <HugeiconsIcon icon={StarIcon} className="w-3 h-3 fill-amber-400 stroke-none" />
+            <span className='text-[10px] font-semibold text-gray-700'>3.5</span>
+          </div>
         </div>
 
-        <div className='h-1/3 py-2 overflow-x-hidden px-4 flex flex-col justify-center gap-1 text-zinc-700 bg-red-500 relative'>
-          <div className='w-[95%] overflow-hidden text-ellipsis mx-auto'>
-            <h4 className=' line-clamp-1 text-zinc-800 font-semibold mb-1 text-sm'>{product.title}</h4>
-            <p className=' text-xs line-clamp-2 text-slate-100'>{product.description}</p>
+        {/* Content Container */}
+        <div className='flex-1 p-3 flex flex-col justify-between'>
+          <div>
+            <h4 className='text-sm font-semibold text-gray-900 mb-1.5 line-clamp-2 group-hover:text-blue-600 transition-colors leading-tight'>
+              {product.title}
+            </h4>
+            <p className='text-xs text-gray-600 line-clamp-2 mb-2 leading-relaxed'>
+              {product.description}
+            </p>
+          </div>
+
+          {/* Price and Action Row */}
+          <div className='flex items-center justify-between pt-2 border-t border-gray-100'>
+            <span className='text-lg font-bold text-gray-900'>
+              {product.price}
+            </span>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddToCart();
+              }}
+              className='bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-colors shadow-sm hover:shadow-md active:scale-95 transform duration-150'
+              aria-label="Add to cart"
+            >
+              <HugeiconsIcon icon={ShoppingCartAdd02Icon} className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </Link>
-      {/*  */}
-      <div className='absolute top-4 left-0 w-full'>
-        <div className='px-2 py-1 flex items-center justify-between w-full gap-2'>
-          <span className=' bg-zinc-100/75 text-zinc-700 px-2 py-1 rounded-md text-xs '>{product.category}</span>
-          <span className=' bg-zinc-100/75 text-zinc-700 px-2 py-1 rounded-md text-xs '>{product.price}</span>
-        </div>
-
-        <div className='px-2 py-1 flex items-center justify-between w-full gap-2'>
-          <div className='flex items-center'>
-            <HugeiconsIcon icon={StarIcon} className="w-3 fill-amber-400 stroke-none" />
-            <span className='text-[10px] text-amber-400'>3,5</span>
-          </div>
-
-          <HugeiconsIcon icon={ShoppingCartAdd02Icon} className=" text-green-500 " size={24} onClick={handleAddToCart} />
-        </div>
-      </div>
     </div>
   )
 }

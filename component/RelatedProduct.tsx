@@ -24,7 +24,7 @@ export default function RelatedProduct({ category }: { category: string }) {
   return (
     <div className='w-full h-fit p-4 lg:p-10'>
       <h3 className='text-zinc-500 font-semibold'>Related Products</h3>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  w-[90%] mx-auto my-10'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  w-[90%] mx-auto my-10'>
         {
           related?.length > 0 ? related.map((p, index) => (<ProductCard key={index} product={p} />)) :
             (
